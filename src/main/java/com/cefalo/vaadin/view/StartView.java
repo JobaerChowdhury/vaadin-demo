@@ -1,38 +1,50 @@
-package com.cefalo.vaadin;
+package com.cefalo.vaadin.view;
 
 /**
  * Created by jobaer on 1/21/16.
  */
 
+import com.cefalo.vaadin.MyUI;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 
 /**
  * A start view for navigating to the main view
  */
 public class StartView extends VerticalLayout implements View {
-    protected static final String MAINVIEW = "main";
 
     public StartView(Navigator navigator) {
         setSizeFull();
 
-        Button button = new Button("Go to Main View",
+        Button button = new Button("Go to Help View",
             new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
-                    navigator.navigateTo(MAINVIEW);
+                    navigator.navigateTo(MyUI.MAINVIEW);
                 }
             });
+
+        Button report = new Button("Go to Report View",
+            new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
+                    navigator.navigateTo(MyUI.REPORTVIEW);
+                }
+            });
+
         addComponent(button);
+        addComponent(report);
         setComponentAlignment(button, Alignment.MIDDLE_CENTER);
+        setComponentAlignment(report, Alignment.MIDDLE_CENTER);
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-//        Notification.show("Welcome to the Animal Farm");
+        Notification.show("Welcome to the Initial view");
     }
 }

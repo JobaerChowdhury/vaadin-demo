@@ -1,5 +1,8 @@
 package com.cefalo.vaadin;
 
+import com.cefalo.vaadin.view.HelpView;
+import com.cefalo.vaadin.view.ReportView;
+import com.cefalo.vaadin.view.StartView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
@@ -18,7 +21,8 @@ import javax.servlet.annotation.WebServlet;
 public class MyUI extends UI {
 
     Navigator navigator;
-    protected static final String MAINVIEW = "main";
+    public static final String MAINVIEW = "help";
+    public static final String REPORTVIEW = "report";
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -29,7 +33,8 @@ public class MyUI extends UI {
 
         // Create and register the views
         navigator.addView("", new StartView(navigator));
-        navigator.addView(MAINVIEW, new MainView(navigator));
+        navigator.addView(MAINVIEW, new HelpView(navigator));
+        navigator.addView(REPORTVIEW, new ReportView(navigator));
     }
 
     private void helloWorld() {

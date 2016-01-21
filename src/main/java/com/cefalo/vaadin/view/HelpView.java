@@ -1,9 +1,10 @@
-package com.cefalo.vaadin;
+package com.cefalo.vaadin.view;
 
 /**
  * Created by jobaer on 1/21/16.
  */
 
+import com.cefalo.vaadin.MyUI;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -15,25 +16,24 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * A start view for navigating to the main view
  */
-public class MainView extends VerticalLayout implements View {
-    protected static final String MAINVIEW = "main";
+public class HelpView extends VerticalLayout implements View {
 
-    public MainView(Navigator navigator) {
+    public HelpView(Navigator navigator) {
         setSizeFull();
 
         Button button = new Button("Go back",
-            new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    navigator.navigateTo("");
-                }
-            });
+            event -> navigator.navigateTo(""));
         addComponent(button);
         setComponentAlignment(button, Alignment.MIDDLE_CENTER);
+
+        Button report = new Button("Go to reports",
+            event -> navigator.navigateTo(MyUI.REPORTVIEW));
+        addComponent(report);
+        setComponentAlignment(report, Alignment.MIDDLE_CENTER);
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        Notification.show("Welcome to the Animal Farm");
+        Notification.show("Welcome to the Help view");
     }
 }
