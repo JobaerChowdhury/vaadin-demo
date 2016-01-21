@@ -1,17 +1,14 @@
 package com.cefalo.vaadin;
 
-import javax.servlet.annotation.WebServlet;
-
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
+
+import javax.servlet.annotation.WebServlet;
 
 /**
  *
@@ -20,8 +17,22 @@ import com.vaadin.ui.VerticalLayout;
 @Widgetset("com.cefalo.vaadin.MyAppWidgetset")
 public class MyUI extends UI {
 
+    Navigator navigator;
+    protected static final String MAINVIEW = "main";
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
+        getPage().setTitle("Navigation Example");
+
+        // Create a navigator to control the views
+        navigator = new Navigator(this, this);
+
+        // Create and register the views
+        navigator.addView("", new StartView(navigator));
+        navigator.addView(MAINVIEW, new MainView(navigator));
+    }
+
+    private void helloWorld() {
         final VerticalLayout layout = new VerticalLayout();
 
         final Label hello = new Label("Hello, Vaadin!");
@@ -31,15 +42,15 @@ public class MyUI extends UI {
         name.setCaption("Type your name here:");
 
         Button button = new Button("Click Me");
-        button.addClickListener( e -> {
-            layout.addComponent(new Label("Thanks " + name.getValue() 
-                    + ", it works!"));
+        button.addClickListener(e -> {
+            layout.addComponent(new Label("Thanks " + name.getValue()
+                + ", it works!"));
         });
-        
+
         layout.addComponents(name, button);
         layout.setMargin(true);
         layout.setSpacing(true);
-        
+
         setContent(layout);
     }
 
