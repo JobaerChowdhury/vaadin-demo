@@ -34,7 +34,7 @@ public class MyUI extends UI {
         CssLayout layout = new CssLayout();
         layout.setStyleName("main-layout");
 
-        leftPanel.setWidth(20, Unit.PERCENTAGE);
+        leftPanel.setWidth(15, Unit.PERCENTAGE);
         layout.addComponent(leftPanel);
 
         VerticalLayout right = new VerticalLayout();
@@ -49,18 +49,24 @@ public class MyUI extends UI {
     }
 
     private Component getLeftPanel() {
+
         final VerticalLayout left = new VerticalLayout();
 
+
         Button dashboard = new Button("Dashboard");
+        dashboard.setSizeFull();
         left.addComponent(dashboard);
 
         Button inspect = new Button("Inspect");
+        inspect.setSizeFull();
         left.addComponent(inspect);
 
         Button controller = new Button("Controller");
+        controller.setSizeFull();
         left.addComponent(controller);
 
         Button analytics = new Button("Analytics");
+        analytics.setSizeFull();
         left.addComponent(analytics);
 
         return left;
