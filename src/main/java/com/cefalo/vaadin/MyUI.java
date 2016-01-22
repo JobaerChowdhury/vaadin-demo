@@ -38,6 +38,7 @@ public class MyUI extends UI {
         layout.addComponent(leftPanel);
 
         VerticalLayout right = new VerticalLayout();
+        right.setStyleName("right-panel");
         right.addComponent(topPanel);
         right.addComponent(contentPanel);
 
