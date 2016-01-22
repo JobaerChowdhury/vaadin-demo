@@ -52,6 +52,7 @@ public class MyUI extends UI {
     private Component getLeftPanel() {
 
         final VerticalLayout left = new VerticalLayout();
+        left.setStyleName("left-panel");
 
 
         Button dashboard = new Button("Dashboard");
@@ -75,6 +76,8 @@ public class MyUI extends UI {
 
     private CssLayout getContentPanel() {
         final CssLayout layout = new CssLayout();
+        layout.setStyleName("content-panel");
+        layout.setSizeFull();
 
         final Label dummy = new Label("<h2>This is the main content area</h2>", ContentMode.HTML);
         layout.addComponent(dummy);
@@ -84,6 +87,7 @@ public class MyUI extends UI {
 
     private CssLayout getTopPanel() {
         final CssLayout layout = new CssLayout();
+        layout.setStyleName("top-menu-panel");
         layout.setSizeFull();
 
         final Link help = new Link();
