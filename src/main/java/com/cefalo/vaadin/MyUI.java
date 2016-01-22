@@ -9,6 +9,7 @@ import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 
 import javax.servlet.annotation.WebServlet;
@@ -26,6 +27,76 @@ public class MyUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
+        CssLayout topPanel = getTopPanel();
+        CssLayout contentPanel = getContentPanel();
+        Component leftPanel = getLeftPanel();
+
+        CssLayout layout = new CssLayout();
+
+        leftPanel.setWidth(20, Unit.PERCENTAGE);
+        layout.addComponent(leftPanel);
+
+        VerticalLayout right = new VerticalLayout();
+        right.addComponent(topPanel);
+        right.addComponent(contentPanel);
+
+        right.setWidth(80, Unit.PERCENTAGE);
+        layout.addComponent(right);
+
+        layout.setSizeFull();
+        setContent(layout);
+    }
+
+    private Component getLeftPanel() {
+        final VerticalLayout left = new VerticalLayout();
+
+        Button dashboard = new Button("Dashboard");
+        left.addComponent(dashboard);
+
+        Button inspect = new Button("Inspect");
+        left.addComponent(inspect);
+
+        Button controller = new Button("Controller");
+        left.addComponent(controller);
+
+        Button analytics = new Button("Analytics");
+        left.addComponent(analytics);
+
+        return left;
+    }
+
+    private CssLayout getContentPanel() {
+        final CssLayout layout = new CssLayout();
+
+        final Label dummy = new Label("<h2>This is the main content area</h2>", ContentMode.HTML);
+        layout.addComponent(dummy);
+
+        return layout;
+    }
+
+    private CssLayout getTopPanel() {
+        final CssLayout layout = new CssLayout();
+        layout.setSizeFull();
+
+        final Link help = new Link();
+        help.setCaption("Help");
+        help.setStyleName("top-menu");
+        layout.addComponent(help);
+
+        final Link admin = new Link();
+        admin.setCaption("Admin");
+        admin.setStyleName("top-menu");
+        layout.addComponent(admin);
+
+        final Link operations = new Link();
+        operations.setCaption("Operations");
+        operations.setStyleName("top-menu");
+        layout.addComponent(operations);
+
+        return layout;
+    }
+
+    private void showNavigator() {
         getPage().setTitle("Navigation Example");
 
         // Create a navigator to control the views
