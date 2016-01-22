@@ -32,6 +32,7 @@ public class MyUI extends UI {
         Component leftPanel = getLeftPanel();
 
         CssLayout layout = new CssLayout();
+        layout.setStyleName("main-layout");
 
         leftPanel.setWidth(20, Unit.PERCENTAGE);
         layout.addComponent(leftPanel);
