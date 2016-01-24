@@ -14,6 +14,7 @@
 *.ipr
 *.iws
 
+*.cache
 /src/main/webapp/VAADIN/themes/*/styles.scss.cache
 
 ## Plugin-specific files:
