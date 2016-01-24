@@ -142,7 +142,11 @@ public class MyUI extends UI {
         setContent(layout);
     }
 
-    @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
+//    If you have only one ui mapping to the root path, then define the servlet as following commented line.
+//    Otherwise you will also have to specify the VAADIN path as shown below. This is helpful for experimenting
+//    since we are writing multiple UIs for experiment.
+//    @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
+    @WebServlet(urlPatterns = {"/myui/*", "/VAADIN/*"}, name = "MyUIServlet", asyncSupported = true)
     @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
     public static class MyUIServlet extends VaadinServlet {
     }
