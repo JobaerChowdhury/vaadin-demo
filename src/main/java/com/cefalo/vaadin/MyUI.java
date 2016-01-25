@@ -1,19 +1,19 @@
 package com.cefalo.vaadin;
 
+import com.cefalo.vaadin.view.AdminView;
 import com.cefalo.vaadin.view.HelpView;
-import com.cefalo.vaadin.view.ReportView;
 import com.cefalo.vaadin.view.StartView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
-import com.vaadin.server.Resource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 
 import javax.servlet.annotation.WebServlet;
+import java.util.List;
 
 /**
  *
@@ -23,13 +23,24 @@ import javax.servlet.annotation.WebServlet;
 public class MyUI extends UI {
 
     Navigator navigator;
-    public static final String MAINVIEW = "help";
-    public static final String REPORTVIEW = "report";
+    public static final String OPERATION_VIEW = "";
+    public static final String ADMIN_VIEW = "admin";
+    public static final String HELP_VIEW = "help";
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
+//        Create a navigator to control the views
+        navigator = new Navigator(this, this);
+
+        // Create and register the views
+        navigator.addView("", new StartView(navigator));
+        navigator.addView(ADMIN_VIEW, new AdminView(navigator));
+        navigator.addView(HELP_VIEW, new HelpView(navigator));
+    }
+
+    public static CssLayout buildMainContent(List<String> names) {
         CssLayout topPanel = getTopPanel();
-        CssLayout contentPanel = getContentPanel();
+        CssLayout contentPanel = getContentPanel(names);
 
         CssLayout layout = new CssLayout();
         layout.setStyleName("main-layout");
@@ -40,37 +51,27 @@ public class MyUI extends UI {
         layout.addComponent(contentPanel);
 
         layout.setSizeFull();
-        setContent(layout);
+        return layout;
     }
 
-    private Component getLeftPanel() {
+
+    private static Component getLeftPanel(List<String> names) {
 
         final VerticalLayout left = new VerticalLayout();
         left.setStyleName("left-panel");
 
-
-        Button dashboard = new Button("Dashboard");
-        dashboard.setSizeFull();
-        left.addComponent(dashboard);
-
-        Button inspect = new Button("Inspect");
-        inspect.setSizeFull();
-        left.addComponent(inspect);
-
-        Button controller = new Button("Controller");
-        controller.setSizeFull();
-        left.addComponent(controller);
-
-        Button analytics = new Button("Analytics");
-        analytics.setSizeFull();
-        left.addComponent(analytics);
+        for (String name : names) {
+            Button button = new Button(name);
+            button.setSizeFull();
+            left.addComponent(button);
+        }
 
         return left;
     }
 
-    private CssLayout getContentPanel() {
+    private static CssLayout getContentPanel(List<String> names) {
         CssLayout mainContentPanel = getMainContentPanel();
-        Component leftPanel = getLeftPanel();
+        Component leftPanel = getLeftPanel(names);
 
         CssLayout content = new CssLayout();
         content.setSizeFull();
@@ -84,7 +85,7 @@ public class MyUI extends UI {
         return content;
     }
 
-    private CssLayout getMainContentPanel() {
+    private static CssLayout getMainContentPanel() {
         final CssLayout layout = new CssLayout();
         layout.setStyleName("content-panel");
         layout.setSizeFull();
@@ -95,7 +96,7 @@ public class MyUI extends UI {
         return layout;
     }
 
-    private CssLayout getTopPanel() {
+    private static CssLayout getTopPanel() {
         final CssLayout layout = new CssLayout();
         layout.setStyleName("top-menu-panel");
 
@@ -128,8 +129,8 @@ public class MyUI extends UI {
 
         // Create and register the views
         navigator.addView("", new StartView(navigator));
-        navigator.addView(MAINVIEW, new HelpView(navigator));
-        navigator.addView(REPORTVIEW, new ReportView(navigator));
+        navigator.addView(OPERATION_VIEW, new AdminView(navigator));
+        navigator.addView(HELP_VIEW, new HelpView(navigator));
     }
 
     private void helloWorld() {
@@ -154,7 +155,7 @@ public class MyUI extends UI {
         setContent(layout);
     }
 
-//    If you have only one ui mapping to the root path, then define the servlet as following commented line.
+    //    If you have only one ui mapping to the root path, then define the servlet as following commented line.
 //    Otherwise you will also have to specify the VAADIN path as shown below. This is helpful for experimenting
 //    since we are writing multiple UIs for experiment.
 //    @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
