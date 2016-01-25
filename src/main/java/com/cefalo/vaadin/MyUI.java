@@ -34,16 +34,25 @@ public class MyUI extends UI {
         CssLayout layout = new CssLayout();
         layout.setStyleName("main-layout");
 
-        leftPanel.setWidth(15, Unit.PERCENTAGE);
-        layout.addComponent(leftPanel);
 
         VerticalLayout right = new VerticalLayout();
         right.setStyleName("right-panel");
         right.addComponent(topPanel);
         right.addComponent(contentPanel);
 
-        right.setWidth(80, Unit.PERCENTAGE);
-        layout.addComponent(right);
+
+        topPanel.setWidth(100, Unit.PERCENTAGE);
+        layout.addComponent(topPanel);
+
+        CssLayout mainContent = new CssLayout();
+        mainContent.setSizeFull();
+
+        leftPanel.setWidth(15, Unit.PERCENTAGE);
+        mainContent.addComponent(leftPanel);
+
+        contentPanel.setWidth(85, Unit.PERCENTAGE);
+        mainContent.addComponent(contentPanel);
+        layout.addComponent(mainContent);
 
         layout.setSizeFull();
         setContent(layout);
@@ -88,7 +97,6 @@ public class MyUI extends UI {
     private CssLayout getTopPanel() {
         final CssLayout layout = new CssLayout();
         layout.setStyleName("top-menu-panel");
-        layout.setSizeFull();
 
         final Link help = new Link();
         help.setCaption("Help");
