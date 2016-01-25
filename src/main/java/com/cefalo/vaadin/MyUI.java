@@ -34,12 +34,10 @@ public class MyUI extends UI {
         CssLayout layout = new CssLayout();
         layout.setStyleName("main-layout");
 
-
         VerticalLayout right = new VerticalLayout();
         right.setStyleName("right-panel");
         right.addComponent(topPanel);
         right.addComponent(contentPanel);
-
 
         topPanel.setWidth(100, Unit.PERCENTAGE);
         layout.addComponent(topPanel);
