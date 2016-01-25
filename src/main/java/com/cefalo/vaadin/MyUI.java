@@ -7,6 +7,7 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
+import com.vaadin.server.Resource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -98,19 +99,22 @@ public class MyUI extends UI {
         final CssLayout layout = new CssLayout();
         layout.setStyleName("top-menu-panel");
 
-        final Link help = new Link();
+        final Button help = new Button();
+        help.setStyleName("link top-menu");
         help.setCaption("Help");
-        help.setStyleName("top-menu");
+        help.addClickListener(clickEvent -> Notification.show("Clicked on help!"));
         layout.addComponent(help);
 
-        final Link admin = new Link();
+        final Button admin = new Button();
         admin.setCaption("Admin");
-        admin.setStyleName("top-menu");
+        admin.setStyleName("link top-menu");
+        admin.addClickListener(e -> Notification.show("Clicked on Admin!"));
         layout.addComponent(admin);
 
-        final Link operations = new Link();
+        final Button operations = new Button();
         operations.setCaption("Operations");
-        operations.setStyleName("top-menu");
+        operations.setStyleName("link top-menu");
+        operations.addClickListener(e -> Notification.show("Clicked on Operations!"));
         layout.addComponent(operations);
 
         return layout;
