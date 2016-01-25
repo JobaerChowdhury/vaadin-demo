@@ -29,28 +29,14 @@ public class MyUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
         CssLayout topPanel = getTopPanel();
         CssLayout contentPanel = getContentPanel();
-        Component leftPanel = getLeftPanel();
 
         CssLayout layout = new CssLayout();
         layout.setStyleName("main-layout");
 
-        VerticalLayout right = new VerticalLayout();
-        right.setStyleName("right-panel");
-        right.addComponent(topPanel);
-        right.addComponent(contentPanel);
-
         topPanel.setWidth(100, Unit.PERCENTAGE);
         layout.addComponent(topPanel);
 
-        CssLayout mainContent = new CssLayout();
-        mainContent.setSizeFull();
-
-        leftPanel.setWidth(15, Unit.PERCENTAGE);
-        mainContent.addComponent(leftPanel);
-
-        contentPanel.setWidth(85, Unit.PERCENTAGE);
-        mainContent.addComponent(contentPanel);
-        layout.addComponent(mainContent);
+        layout.addComponent(contentPanel);
 
         layout.setSizeFull();
         setContent(layout);
@@ -82,6 +68,22 @@ public class MyUI extends UI {
     }
 
     private CssLayout getContentPanel() {
+        CssLayout mainContentPanel = getMainContentPanel();
+        Component leftPanel = getLeftPanel();
+
+        CssLayout content = new CssLayout();
+        content.setSizeFull();
+        leftPanel.setWidth(15, Unit.PERCENTAGE);
+
+        content.addComponent(leftPanel);
+
+        mainContentPanel.setWidth(85, Unit.PERCENTAGE);
+        content.addComponent(mainContentPanel);
+
+        return content;
+    }
+
+    private CssLayout getMainContentPanel() {
         final CssLayout layout = new CssLayout();
         layout.setStyleName("content-panel");
         layout.setSizeFull();
