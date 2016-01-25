@@ -103,19 +103,19 @@ public class MyUI extends UI {
         final Button help = new Button();
         help.setStyleName("link top-menu");
         help.setCaption("Help");
-        help.addClickListener(clickEvent -> Notification.show("Clicked on help!"));
+        help.addClickListener(clickEvent -> UI.getCurrent().getNavigator().navigateTo(HELP_VIEW));
         layout.addComponent(help);
 
         final Button admin = new Button();
         admin.setCaption("Admin");
         admin.setStyleName("link top-menu");
-        admin.addClickListener(e -> Notification.show("Clicked on Admin!"));
+        admin.addClickListener(e -> UI.getCurrent().getNavigator().navigateTo(ADMIN_VIEW));
         layout.addComponent(admin);
 
         final Button operations = new Button();
         operations.setCaption("Operations");
         operations.setStyleName("link top-menu");
-        operations.addClickListener(e -> Notification.show("Clicked on Operations!"));
+        operations.addClickListener(e -> UI.getCurrent().getNavigator().navigateTo(""));
         layout.addComponent(operations);
 
         return layout;
