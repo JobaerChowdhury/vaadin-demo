@@ -46,8 +46,7 @@ public class FirstChartUI extends UI {
 
         YAxis yAxis = new YAxis();
         yAxis.setType(AxisType.LOGARITHMIC);
-//        yAxis.setMin(0);
-        yAxis.setTitle("# of Recs");
+        yAxis.setTitle("Number of Recommendations");
         StackLabels sLabels = new StackLabels(true);
         yAxis.setStackLabels(sLabels);
         conf.addyAxis(yAxis);
