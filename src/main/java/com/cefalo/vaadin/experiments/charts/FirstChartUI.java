@@ -1,18 +1,16 @@
 package com.cefalo.vaadin.experiments.charts;
 
 import com.vaadin.addon.charts.Chart;
-import com.vaadin.addon.charts.PointClickEvent;
-import com.vaadin.addon.charts.PointClickListener;
 import com.vaadin.addon.charts.model.*;
 import com.vaadin.addon.charts.model.style.SolidColor;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 
 import javax.servlet.annotation.WebServlet;
+import java.util.Random;
 
 /**
  * Created by jobaer on 1/24/2016.
@@ -21,7 +19,7 @@ import javax.servlet.annotation.WebServlet;
 public class FirstChartUI extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        Chart chart = emailRecommendations();
+        Chart chart = dynamicSpline();
 
         setContent(chart);
     }
@@ -99,6 +97,56 @@ public class FirstChartUI extends UI {
             6800,  143000, 125000,
             51100, 49500);
         conf.addSeries(series);
+        return chart;
+    }
+
+    private Chart dynamicSpline() {
+        final Random random = new Random();
+
+        final Chart chart = new Chart();
+        chart.setWidth("500px");
+
+        final Configuration configuration = chart.getConfiguration();
+        configuration.getChart().setType(ChartType.SPLINE);
+        configuration.getTitle().setText("Live random data");
+
+        XAxis xAxis = configuration.getxAxis();
+        xAxis.setType(AxisType.DATETIME);
+        xAxis.setTickPixelInterval(150);
+
+        YAxis yAxis = configuration.getyAxis();
+        yAxis.setTitle("Value");
+        PlotLine plotline = new PlotLine();
+        plotline.setValue(0);
+        plotline.setWidth(1);
+        plotline.setColor(new SolidColor("#808080"));
+        yAxis.setPlotLines(new PlotLine[] { plotline });
+
+        // FIXME missing generated API
+        configuration.getTooltip().setEnabled(false);
+        configuration.getLegend().setEnabled(false);
+
+        final DataSeries series = new DataSeries();
+        series.setPlotOptions(new PlotOptionsSpline());
+        series.setName("Random data");
+        for (int i = -19; i <= 0; i++) {
+            series.add(new DataSeriesItem(
+                System.currentTimeMillis() + i * 1000, random.nextDouble()));
+        }
+
+        AbstractChartExample.runWhileAttached(chart, new Runnable() {
+
+            @Override
+            public void run() {
+                final long x = System.currentTimeMillis();
+                final double y = random.nextDouble();
+                series.add(new DataSeriesItem(x, y), true, true);
+            }
+        }, 1000, 1000);
+
+        configuration.setSeries(series);
+
+        chart.drawChart(configuration);
         return chart;
     }
 
