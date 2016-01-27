@@ -40,6 +40,8 @@ public class FirstChartUI extends UI {
             "13h", "142h", "15h", "16h", "17h", "18h",
             "19h", "20h", "21h", "22h", "23h", "24h"
         );
+        Labels labels = xAxis.getLabels();
+        labels.setStep(2);
         conf.addxAxis(xAxis);
 
         YAxis yAxis = new YAxis();
@@ -82,6 +84,7 @@ public class FirstChartUI extends UI {
         );
         PlotOptionsColumn salesOptions = new PlotOptionsColumn();
         salesOptions.setColor(new SolidColor(26, 184, 152));
+        sales.setPlotOptions(salesOptions);
         conf.addSeries(sales);
 
         chart.drawChart(conf);
