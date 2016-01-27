@@ -43,7 +43,8 @@ public class FirstChartUI extends UI {
         conf.addxAxis(xAxis);
 
         YAxis yAxis = new YAxis();
-        yAxis.setMin(0);
+        yAxis.setType(AxisType.LOGARITHMIC);
+//        yAxis.setMin(0);
         yAxis.setTitle("# of Recs");
         StackLabels sLabels = new StackLabels(true);
         yAxis.setStackLabels(sLabels);
@@ -57,8 +58,8 @@ public class FirstChartUI extends UI {
         conf.setLegend(legend);
 
         Tooltip tooltip = new Tooltip();
-        tooltip.setFormatter("function() { return ''+ this.x +'"
-                + "'+this.series.name +': '+ this.y +''+'Total: '+ this.point.stackTotal;}");
+        tooltip.setFormatter("function() { return '"
+                + "'+this.series.name +': '+ this.y +''+' Total: '+ this.point.stackTotal;}");
         conf.setTooltip(tooltip);
 
         PlotOptionsColumn plotOptions = new PlotOptionsColumn();
